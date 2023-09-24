@@ -3,6 +3,8 @@ from logging import getLogger, _nameToLevel
 from flask import Flask, jsonify, request
 from modules import Database, fread
 
+from uuid import uuid1
+
 getLogger("werkzeug").setLevel(_nameToLevel["ERROR"])
 
 app = Flask(
@@ -62,6 +64,7 @@ def book_machine(category: str, mid: str):
             "msg": "Slot is already busy"
         })
     
+    schedule_request["slotid"] = uuid1().hex
     machine_data["schedule"].append(schedule_request)
     db.put(category, mid, machine_data)
 
@@ -69,6 +72,27 @@ def book_machine(category: str, mid: str):
         "OK": True,
         "booked": True,
         "msg": "Slot booked successfully"
+    })
+
+@app.route("/api/machine/<category>/<mid>/cancel", methods=["POST"])
+@app.route("/api/machines/<category>/<mid>/cancel", methods=["POST"])
+def cancel_booking(category: str, mid: str):
+    machine_data = db.get(category.title(), mid.upper())
+    if not machine_data: return jsonify({
+        "OK": False,
+        "msg": "Machine not found"
+    })
+
+    schedule_request = request.get_json()
+    schedule = [slot for slot in machine_data["schedule"] if slot["slotid"] != schedule_request["slotid"]]
+
+    machine_data["schedule"] = schedule
+    db.put(category, mid, machine_data)
+
+    return jsonify({
+        "OK": True,
+        "booked": True,
+        "msg": "Slot cancelled successfully"
     })
 
 @app.route("/machines/<category>")

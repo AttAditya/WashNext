@@ -7,19 +7,44 @@
     <title>[[id]]</title>
 
     <script src="/res/scripts/bookslot.js"></script>
+
+    <link rel="stylesheet" href="/res/stylesheets/main.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="title">
+    <a href="/machines/[[category]]">
+        <button class="button is-primary is-small m-3">
+            Back
+        </button>
+    </a>
+
+    <div class="container p-6">
+        <h1 class="title is-size-1">
             [[id]]
         </h1>
 
-        <div class="columns is-multiline" id="details"></div>
+        <h1 class="title mb-0">
+            Machine Status
+        </h1>
+        <h2 class="content is-size-5" id="status"></h2>
+
+        <h1 class="title mb-0">
+            Reserve a Slot
+        </h1>
+        <div class="content">
+            <button class="button is-primary" onclick="">
+                Book
+            </button>
+        </div>
+
+        <h1 class="title mb-0">
+            Schedule
+        </h1>
+        <div class="columns is-multiline" id="schedule"></div>
     </div>
 </body>
 <script>
-    showMachineDetails("[[category]]", "[[id]]", document.getElementById("details"));
+    showMachineDetails("[[category]]", "[[id]]");
 </script>
 
 </html>
