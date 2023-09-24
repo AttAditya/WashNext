@@ -1,3 +1,10 @@
+function afterDays(n) {
+    let d = new Date();
+    d.setTime(d.getTime() + (n * 24 * 60 * 60 * 1000));
+    e = `${String(d.getFullYear())[2] + String(d.getFullYear())[3]}-${d.getMonth()}-${d.getDate()}`;
+    return e
+}
+
 async function bookSlot(category, machine_id, date, time, user) {
     let data = {
         date: date,
@@ -14,6 +21,7 @@ async function bookSlot(category, machine_id, date, time, user) {
     }).then(req => req.json()).then(server_res => {
         if (server_res.OK) {
             alert(server_res.msg);
+            location.reload();
         } else {
             alert(server_res.msg);
         }
