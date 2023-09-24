@@ -1,0 +1,20 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+@import "/res/stylesheets/colors.css";
+
+* {
+    transition: 0.3s;
+    color: hsl(0, 0%, 14%);
+}
+
+html {
+    overflow-y: auto;
+}
+
+button {
+    transform: scale(1);
+}
+
+button:hover {
+    transform: scale(1.2);
+}
+
